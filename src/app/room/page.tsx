@@ -50,4 +50,20 @@ const Room = () => {
   )
 }
 
+const MyVideoConference = () => {
+  const tracks = useTracks(
+    [
+      { source: Track.Source.Camera, withPlaceholder: true },
+      { source: Track.Source.ScreenShare, withPlaceholder: true }
+    ],
+    { onlySubscribed: true}
+  )
+
+  return (
+    <GridLayout tracks={tracks} style={{ height: 'calc(100vh - var(--lk-control-bar-height)'}}>
+      <ParticipantTile />
+    </GridLayout>
+  )
+}
+
 export default Room
