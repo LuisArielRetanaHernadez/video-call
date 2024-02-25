@@ -9,7 +9,9 @@ import {
   VideoConference,
   GridLayout,
   ParticipantTile,
-  useTracks
+  useTracks,
+  RoomAudioRenderer,
+  ControlBar
 } from '@livekit/components-react'
 
 import { Track } from 'livekit-client'
@@ -24,7 +26,8 @@ const Room = () => {
 
   useEffect(() => {
     const getParticipantToken = async () => {
-      const response = await fetch(`/api/get-participant-token?room=${room}&name=${name}`)
+      const response = await fetch(`/api/get-participant-token?room=${room}&username=${name}`)
+      console.log('response ', response)
       const { token } = await response.json()
       setToken(token)
     }
@@ -40,12 +43,13 @@ const Room = () => {
     video={true}
     audio={true}
     token={token}
-
     serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_SERVER_URL}
     data-lk-theme="default"
-    style={{ height: '100dvh'}}
+    style={{ height: '100vh'}}
     >
       <MyVideoConference />
+      <RoomAudioRenderer />
+      <ControlBar />
     </LiveKitRoom>
   )
 }
