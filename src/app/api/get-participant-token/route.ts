@@ -1,14 +1,19 @@
+"use server"
 import { AccessToken } from "livekit-server-sdk"
 import { NextRequest, NextResponse } from "next/server"
 
-export const get = async (req: NextRequest, res: NextResponse) => {
+export const GET = async (req: NextRequest, res: NextResponse) => {
+  // componente dinamico 
+  // 'use server'
   const room = req.nextUrl.searchParams.get("room")
   const username = req.nextUrl.searchParams.get("username")
+
+  console.log('hola')
 
   if (!room || !username) {
     return new Response("Missing room or username", { status: 400 })
   }
-
+  console.log(process.env.LIVEKIT_API_KEY, ' ', process.env.LIVEKIT_API_SECRET, ' ', process.env.NEXT_PUBLIC_LIVEKIT_URL)
   const apiKey = process.env.LIVEKIT_API_KEY
   const apiSecret = process.env.LIVEKIT_API_SECRET
   const wsUrl = process.env.NEXT_PUBLIC_LIVEKIT_URL
