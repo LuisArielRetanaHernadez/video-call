@@ -18,7 +18,7 @@ import { Track } from 'livekit-client'
 import { useEffect, useState } from 'react'
 
 const Room = () => {
-  const [token, setToken] = useEffect("")
+  const [token, setToken] = useState("")
   const room = "quickstart-room"
   const name = "quickstart-user"
 
