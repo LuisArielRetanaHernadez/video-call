@@ -45,20 +45,32 @@ const Room = () => {
 
   if (token === "") {
     return (
-      <div>
-        <form onSubmit={e => {
+      <div className=' w-screen h-screen bg-slate-100 flex items-center justify-center'>
+        <form
+        className='w-2/5 min-w-[355px] min-h-[280px] p-2 rounded-md shadow-xl shadow-[#211951] bg-[#070F2B] flex flex-col items-center justify-center'
+         onSubmit={e => {
           e.preventDefault()
           getParticipantToken()
         }}>
-          <div>
-            <label htmlFor="room">Room</label>
-            <input type="text" id="room" name="room" value={room} onChange={e => setRoom(e.target.value)} />
+          <div className='w-[80%] text-[#F0F3FF] mb-8 flex flex-col gap-3'>
+            <label
+              className='font-bold text-xl'
+              htmlFor="room">Room</label>
+            <input
+              className='p-1 rounded-md text-[#070F2B] font-semibold outline-none'
+             type="text" id="room" name="room" value={room} onChange={e => setRoom(e.target.value)} />
           </div>
-          <div>
-            <label htmlFor="name">Name</label>
-            <input type="text" id="name" name="name" value={username} onChange={e => setUsername(e.target.value)} />
+          <div className='w-[80%] text-[#F0F3FF] mb-8 flex flex-col gap-3'>
+            <label
+              className='font-bold text-xl'
+              htmlFor="name">Name</label>
+            <input
+            className='p-1 rounded-md text-[#070F2B] font-semibold  outline-none'
+             type="text" id="name" name="name" value={username} onChange={e => setUsername(e.target.value)} />
           </div>
-          <button type="submit">Get Token</button>
+          <button
+          className='px-3 py-2 text-[#070F2B] font-semibold rounded-md bg-[#F72798]'
+          type="submit">Get Token</button>
         </form>
       </div>
     )
