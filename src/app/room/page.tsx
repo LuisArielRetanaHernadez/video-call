@@ -20,23 +20,48 @@ import { Track } from 'livekit-client'
 import { useEffect, useState } from 'react'
 
 const Room = () => {
-  const [token, setToken] = useState("")
-  const room = "quickstart-room"
-  const name = "quickstart-user"
+  const [token, setToken] = useState<string>("")
+  const [room, setRoom] = useState<string>("")
+  const [username, setUsername] = useState<string>("")
 
-  useEffect(() => {
-    const getParticipantToken = async () => {
-      const numerRandom = Math.random() * 10000
-      const response = await fetch(`/api/get-participant-token?room=${room}&username=${name + numerRandom}`)
-      console.log('response ', response)
-      const { token } = await response.json()
-      setToken(token)
-    }
-    getParticipantToken()
-  }, [])
+  // useEffect(() => {
+  //   const getParticipantToken = async () => {
+  //     const numerRandom = Math.random() * 10000
+  //     const response = await fetch(`/api/get-participant-token?room=${room}&username=${name + numerRandom}`)
+  //     console.log('response ', response)
+  //     const { token } = await response.json()
+  //     setToken(token)
+  //   }
+  //   getParticipantToken()
+  // }, [])
+
+  const getParticipantToken = async () => {
+    const numerRandom = Math.random() * 10000
+    const response = await fetch(`/api/get-participant-token?room=${room}&username=${username}`)
+    console.log('response ', response)
+    const { token } = await response.json()
+    setToken(token)
+  }
 
   if (token === "") {
-    return <div>Loading...</div>
+    return (
+      <div>
+        <form onSubmit={e => {
+          e.preventDefault()
+          getParticipantToken()
+        }}>
+          <div>
+            <label htmlFor="room">Room</label>
+            <input type="text" id="room" name="room" value={room} onChange={e => setRoom(e.target.value)} />
+          </div>
+          <div>
+            <label htmlFor="name">Name</label>
+            <input type="text" id="name" name="name" value={username} onChange={e => setUsername(e.target.value)} />
+          </div>
+          <button type="submit">Get Token</button>
+        </form>
+      </div>
+    )
   }
 
   return (
@@ -44,6 +69,7 @@ const Room = () => {
     video={true}
     audio={true}
     token={token}
+    onReset={() => setToken("")}
     serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
     data-lk-theme="default"
     style={{ height: '100vh'}}
