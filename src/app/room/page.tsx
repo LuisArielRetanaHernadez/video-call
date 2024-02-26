@@ -26,7 +26,8 @@ const Room = () => {
 
   useEffect(() => {
     const getParticipantToken = async () => {
-      const response = await fetch(`/api/get-participant-token?room=${room}&username=${name}`)
+      const numerRandom = Math.random() * 10000
+      const response = await fetch(`/api/get-participant-token?room=${room}&username=${name + numerRandom}`)
       console.log('response ', response)
       const { token } = await response.json()
       setToken(token)
@@ -43,7 +44,7 @@ const Room = () => {
     video={true}
     audio={true}
     token={token}
-    serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_SERVER_URL}
+    serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
     data-lk-theme="default"
     style={{ height: '100vh'}}
     >
@@ -58,7 +59,8 @@ const MyVideoConference = () => {
   const tracks = useTracks(
     [
       { source: Track.Source.Camera, withPlaceholder: true },
-      { source: Track.Source.ScreenShare, withPlaceholder: true }
+      { source: Track.Source.ScreenShare, withPlaceholder: false },
+      { source: Track.Source.Microphone, withPlaceholder: true }
     ],
     { onlySubscribed: true}
   )
